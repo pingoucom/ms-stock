@@ -2,7 +2,6 @@ package br.imd.ufrn.webII.msstockLB.controller;
 
 import br.imd.ufrn.webII.msstockLB.entity.Product;
 import br.imd.ufrn.webII.msstockLB.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +17,39 @@ public final class ProductController {
     }
 
     @ResponseBody
-    @GetMapping("/all")
+    @GetMapping("/findAll")
     public List<Product> getAllProducts(){
-        return productService.findAllGreetings();
+        return productService.findAllProducts();
     }
+    @ResponseBody
+    @GetMapping
+    public Product getProductByID(@RequestParam Long productId){
+        return productService.findProductById(productId);
+    }
+
+
+
+    @ResponseBody
+    @PutMapping("/update/{productId}")
+    public String putProduct(@PathVariable Long productId, @RequestBody Product updateProduct){
+        return productService.updateProduct(productId, updateProduct);
+    }
+
+
+    @ResponseBody
+    @ResponseStatus
+    @DeleteMapping("/{productId}")
+    public String deleteProduct(@PathVariable Long productId){
+        return productService.deleteProduct(productId);
+    }
+
+    @ResponseBody
+    @GetMapping("/findName")
+    public List<Product> getProductsByName(@RequestParam String name){
+        return productService.findProductsByName(name);
+    }
+
+
 
     @ResponseBody
     @ResponseStatus
